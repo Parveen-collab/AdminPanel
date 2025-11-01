@@ -12,7 +12,8 @@ import {
   Divider,
   Typography,
 } from '@mui/material';
-import { Dashboard, People, Logout, MonetizationOn, Analytics, LocalOffer, TrendingUp, TrendingDown } from '@mui/icons-material';
+import { Dashboard, People, Logout, MonetizationOn, Analytics, LocalOffer, TrendingUp, TrendingDown, 
+  Star, Home, Store, RateReview, Info, Group, Mail } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { authApi } from '../../api/authApi';
 
@@ -39,9 +40,17 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose, collapsed = false }) =
     { text: 'Customer Analytics', icon: <Analytics />, path: '/customers/analytics' },
     { text: 'Sales Analytics', icon: <TrendingUp />, path: '/sales-analytics' },
     { text: 'Inactive Users', path: '/inactive-users', icon: <TrendingDown /> },
+    { text: 'CMS - Features', icon: <Star />, path: '/cms/features' },
+    { text: 'CMS - Home Pages', icon: <Home />, path: '/cms/home-pages' },
+    { text: 'CMS - Shop In Action', icon: <Store />, path: '/cms/shop-in-actions' },
+    { text: 'CMS - Customer Reviews', icon: <RateReview />, path: '/cms/customer-reviews' },
+    { text: 'CMS - About Us', icon: <Info />, path: '/cms/about-us' },
+    { text: 'CMS - Team', icon: <Group />, path: '/cms/teams' },
+    { text: 'CMS - Enquiries', icon: <Mail />, path: '/cms/enquiries' },
   ];
 
   const handleNavigate = (path: string) => {
+    console.log('Sidebar: Navigating to:', path);
     navigate(path);
     if (isMobile) onClose();
   };
@@ -67,7 +76,10 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose, collapsed = false }) =
           return (
             <ListItem key={item.text} disablePadding>
               <ListItemButton
-                onClick={() => handleNavigate(item.path)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNavigate(item.path);
+                }}
                 selected={selected}
                 sx={{
                   '&.Mui-selected': {

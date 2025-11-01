@@ -14,6 +14,13 @@ import CustomerAnalytics from './pages/CustomerAnalytics';
 import PromoCodeManagement from './pages/PromoCodeManagement';
 import SalesAnalytics from './pages/SalesAnalytics';
 import InactiveUsers from './pages/InactiveUsers';
+import Features from './pages/CMS/Features';
+import HomePages from './pages/CMS/HomePages';
+import ShopInActions from './pages/CMS/ShopInActions';
+import CustomerReviews from './pages/CMS/CustomerReviews';
+import AboutUs from './pages/CMS/AboutUs';
+import Team from './pages/CMS/Team';
+import Enquiries from './pages/CMS/Enquiries';
 
 const AppThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 	const { theme: mode, primaryColor } = useTheme();
@@ -34,7 +41,11 @@ const AppThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children })
 
 const PrivateRoute: React.FC<{ children: JSX.Element }> = ({ children }) => {
 	const token = localStorage.getItem('token');
-	if (!token) return <Navigate to="/login" replace />;
+	if (!token) {
+		console.log('PrivateRoute: No token, redirecting to login');
+		return <Navigate to="/login" replace />;
+	}
+	console.log('PrivateRoute: Token found, rendering children');
 	return children;
 };
 
@@ -138,6 +149,63 @@ const App: React.FC = () => {
 								</PrivateRoute>
 							}
 						/>
+						<Route
+							path="/cms/features"
+							element={
+								<PrivateRoute>
+									<Features />
+								</PrivateRoute>
+							}
+						/>
+						<Route
+							path="/cms/home-pages"
+							element={
+								<PrivateRoute>
+									<HomePages />
+								</PrivateRoute>
+							}
+						/>
+						<Route
+							path="/cms/shop-in-actions"
+							element={
+								<PrivateRoute>
+									<ShopInActions />
+								</PrivateRoute>
+							}
+						/>
+						<Route
+							path="/cms/customer-reviews"
+							element={
+								<PrivateRoute>
+									<CustomerReviews />
+								</PrivateRoute>
+							}
+						/>
+						<Route
+							path="/cms/about-us"
+							element={
+								<PrivateRoute>
+									<AboutUs />
+								</PrivateRoute>
+							}
+						/>
+						<Route
+							path="/cms/teams"
+							element={
+								<PrivateRoute>
+									<Team />
+								</PrivateRoute>
+							}
+						/>
+						<Route
+							path="/cms/enquiries"
+							element={
+								<PrivateRoute>
+									<Enquiries />
+								</PrivateRoute>
+							}
+						/>
+						<Route path="/" element={<Navigate to="/dashboard" replace />} />
 						<Route path="*" element={<Navigate to="/dashboard" replace />} />
 					</Routes>
 				</BrowserRouter>
